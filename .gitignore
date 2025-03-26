@@ -1,0 +1,20 @@
+# .gitignore
+
+# Archivos de Python compilados
+__pycache__/
+*.pyc
+
+# Entorno virtual
+venv/
+
+# Archivos sensibles o configuraciones locales
+*.env
+
+# Logs
+*.log
+
+# IDE
+.idea/
+
+# Archivos temporales del sistema
+.DS_Store

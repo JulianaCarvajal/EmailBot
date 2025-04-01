@@ -1,13 +1,13 @@
 # .gitignore
 
-# Archivos de Python compilados
+# Compiled Python files
 __pycache__/
 *.pyc
 
-# Entorno virtual
+# Virtual environment
 venv/
 
-# Archivos sensibles o configuraciones locales
+# Sensitive files or local configurations
 *.env
 
 # Logs
@@ -16,5 +16,5 @@ venv/
 # IDE
 .idea/
 
-# Archivos temporales del sistema
-.DS_Store
+# OS files
+Thumbs.db

@@ -2,11 +2,16 @@
 
 Envío de correos electrónicos mediante Gmail con manejo seguro de credenciales.
 
+---
+
 ## 🚀 Características
 
-- Envío de correos a través de Gmail
+- Envío de correos a través de Gmail (SMTP)
 - Configuración mediante archivo `.env` (sin exponer credenciales)
+- Permite personalización del mensaje en `email_content.py`
 - Test básico con `pytest` para validar comportamiento del sistema
+
+---
 
 ## 🔧 Instalación
 
@@ -29,6 +34,10 @@ Envío de correos electrónicos mediante Gmail con manejo seguro de credenciales
    EMAIL_ADDRESS=tu_email@gmail.com
    EMAIL_RECEIVER=destinatario@example.com
    EMAIL_PASS=tu_contraseña_de_aplicación
+5. Crear un archivo `email_content.py` con el asunto y cuerpo del mensaje
+   > Puedes usar `email_content.example.py` como plantilla.
+
+---
 
 ## ▶️ Uso
 
@@ -36,10 +45,13 @@ Ejecutar el archivo principal:
 ```
 python main.py
 ```
-Esto enviará un correo utilizando los datos cargados desde `.env`. El asunto y contenido pueden personalizarse dentro del script.
+Esto enviará el correo con las credenciales y contenido configurados.
+
+---
 
 ## 🧪 Testeo
 
+Puedes ejecutar los tests con:
 ```
 # PowerShell
 $env:PYTHONPATH="."
@@ -49,6 +61,8 @@ pytest
 PYTHONPATH=. pytest
 ```
 
+---
+
 ## 📂 Estructura del proyecto
 
 ```
@@ -56,9 +70,11 @@ EmailBot/
 │
 ├── main.py
 ├── .gitignore
-├── .env              # Ignorado por Git
+├── .env                      # Ignorado por Git
 ├── requirements.txt
 ├── README.md
+├── email_content.py          # Ignorado por Git
+├── email_content_example.py
 ├── tests/
 │   └── test_main.py
 ```

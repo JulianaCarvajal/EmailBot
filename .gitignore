@@ -10,6 +10,9 @@ venv/
 # Sensitive files or local configurations
 *.env
 
+# Real email content
+email_content.py
+
 # Logs
 *.log
 

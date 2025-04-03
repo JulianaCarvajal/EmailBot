@@ -1,6 +1,6 @@
 # EmailBot 📧
 
-Envío de correos electrónicos mediante Gmail con manejo seguro de credenciales.
+Envío de correos electrónicos mediante Gmail con manejo seguro de credenciales y opción para adjuntar archivos.
 
 ---
 
@@ -9,6 +9,7 @@ Envío de correos electrónicos mediante Gmail con manejo seguro de credenciales
 - Envío de correos a través de Gmail (SMTP)
 - Configuración mediante archivo `.env` (sin exponer credenciales)
 - Permite personalización del mensaje en `email_content.py`
+- Permite adjuntar archivos (opcional)
 - Test básico con `pytest` para validar comportamiento del sistema
 
 ---
@@ -34,7 +35,8 @@ Envío de correos electrónicos mediante Gmail con manejo seguro de credenciales
    EMAIL_ADDRESS=tu_email@gmail.com
    EMAIL_RECEIVER=destinatario@example.com
    EMAIL_PASS=tu_contraseña_de_aplicación
-5. Crear un archivo `email_content.py` con el asunto y cuerpo del mensaje
+5. Crear un archivo `email_content.py` con el asunto y cuerpo del mensaje. Si deseas adjuntar archivos también debes 
+especificarlos aquí en forma de lista
    > Puedes usar `email_content.example.py` como plantilla.
 
 ---

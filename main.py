@@ -1,14 +1,16 @@
+import mimetypes
 import os
 import smtplib
 import ssl
 
 from email.message import EmailMessage
 from dotenv import load_dotenv
-# Trying to import subject and body
+
+# Trying to import email_content
 try:
-    from email_content import subject, body
+    import email_content
 except ImportError:
-    raise RuntimeError("The email_content.py file with the subject and body of the message is missing.")
+    raise RuntimeError("The email_content.py file is missing.")
 
 def creds_setup():
     """
@@ -24,7 +26,7 @@ def creds_setup():
         'password': os.getenv("EMAIL_PASS")
     }
 
-def create_message(receivers, sender, subject, body):
+def create_plain_message(receivers, sender, subject, body):
     """
     Create EmailMessage object.
 
@@ -39,6 +41,32 @@ def create_message(receivers, sender, subject, body):
     msg["From"] = sender
     msg["Subject"] = subject
     msg.set_content(body)
+    return msg
+
+def attach_files(msg, files):
+    """
+    Attach file(s) to the EmailMessage object.
+
+    :param msg: EmailMessage object
+    :param files: List of file(s) to be attached
+    :return: EmailMessage object with attachment(s)
+    """
+    for filename in files:
+        if not os.path.isfile(filename):
+            print(f"The file '{filename}' was not found.")
+            continue
+        # Guess the content type based on the file's extension. Encoding will be ignored.
+        ctype, encoding = mimetypes.guess_file_type(filename)
+        if ctype is None or encoding is not None:
+            # No guess could be made, or the file is encoded (compressed).
+            ctype = 'application/octet-stream'
+        maintype, subtype = ctype.split('/', 1)
+        with open(filename, 'rb') as fp:
+            msg.add_attachment(fp.read(),
+                               maintype=maintype,
+                               subtype=subtype,
+                               filename=os.path.basename(filename))
+
     return msg
 
 def send_message(host, port, sender, password, receivers, msg, bcc=[]):
@@ -64,8 +92,11 @@ def main():
     Construct the message and send it.
     """
     creds = creds_setup()
-    email_subject, email_body = subject, body
-    msg = create_message(creds['receivers'], creds['sender'], email_subject, email_body)
+    email_subject, email_body = email_content.subject, email_content.body
+    msg = create_plain_message(creds['receivers'], creds['sender'], email_subject, email_body)
+    if hasattr(email_content, "files") and email_content.files:
+        msg = attach_files(msg, email_content.files)
+
     send_message("smtp.gmail.com", 465, creds['sender'], creds['password'], creds['receivers'], msg, creds['bcc'])
 
 if __name__ == "__main__":
